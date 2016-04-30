@@ -15,6 +15,8 @@ public class TwitterConfiguration {
 
     private String accessTokenSecret;
 
+    private String userHandle;
+
     public String getAppId() {
         return appId;
     }
@@ -45,5 +47,13 @@ public class TwitterConfiguration {
 
     public void setAccessTokenSecret(String accessTokenSecret) {
         this.accessTokenSecret = accessTokenSecret;
+    }
+
+    public String getUserHandle() {
+        return userHandle;
+    }
+
+    public void setUserHandle(String userHandle) {
+        this.userHandle = userHandle;
     }
 }

@@ -16,13 +16,7 @@ public class ReadingsController {
     private TwitterService twitterService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getFeed() {
-        List<Tweet> tweets = twitterService.getTweets();
-
-        if (tweets.isEmpty()) {
-            return "Twitter feed is empty!";
-        }
-
-        return tweets.get(0).getText();
+    public List<Tweet> getFeed() {
+        return twitterService.getTweets();
     }
 }
