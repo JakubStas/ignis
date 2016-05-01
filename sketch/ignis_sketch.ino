@@ -74,7 +74,7 @@ void loop() {
   delay(1000);
 
   wizfi250.clear();
-  delay(1000);
+  delay(900000);
 }
 
 String getHeaders(int contentLength) {
