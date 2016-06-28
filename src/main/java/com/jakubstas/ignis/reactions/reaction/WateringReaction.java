@@ -20,23 +20,23 @@ public class WateringReaction extends Reaction {
     private Logger logger = LoggerFactory.getLogger(WateringReaction.class);
 
     @Autowired
+    private PersonalityMessageSource personalityMessageSource;
+
+    @Autowired
     private IgnisConfiguration configuration;
 
     @Autowired
     private TwitterService twitterService;
 
-    @Autowired
-    private PersonalityMessageSource personalityMessageSource;
-
     @Override
     public boolean shouldReact(final Readings readings) {
-        final int moisture = readings.getMoisture();
+        final int wateringThreshold = configuration.getSensorsConfiguration().getMoisture().getWateringThreshold();
 
-        if (moisture <= 750) {
+        if (readings.getMoisture() <= wateringThreshold) {
             final String latestTweet = twitterService.getLatestTweet().getText();
 
             if (!doesMessageMatchTheRegexp(latestTweet)) {
-                logger.info("Watering reaction triggered based on moisture level of {}", moisture);
+                logger.info("Watering reaction triggered based on moisture level of {}", readings.getMoisture());
 
                 return true;
             }

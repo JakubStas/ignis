@@ -1,5 +1,6 @@
 package com.jakubstas.ignis.reactions.reaction;
 
+import com.jakubstas.ignis.configuration.IgnisConfiguration;
 import com.jakubstas.ignis.personalities.PersonalityMessageSource;
 import com.jakubstas.ignis.readings.model.Readings;
 import com.jakubstas.ignis.social.TwitterService;
@@ -19,20 +20,23 @@ public class WateredReaction extends Reaction {
     private final Logger logger = LoggerFactory.getLogger(WateredReaction.class);
 
     @Autowired
-    private TwitterService twitterService;
+    private PersonalityMessageSource personalityMessageSource;
 
     @Autowired
-    private PersonalityMessageSource personalityMessageSource;
+    private IgnisConfiguration configuration;
+
+    @Autowired
+    private TwitterService twitterService;
 
     @Override
     public boolean shouldReact(final Readings readings) {
-        final int moisture = readings.getMoisture();
+        final int wateringThreshold = configuration.getSensorsConfiguration().getMoisture().getWateringThreshold();
 
-        if (moisture > 750) {
+        if (readings.getMoisture() > wateringThreshold) {
             final String latestTweet = twitterService.getLatestTweet().getText();
 
             if (!doesMessageMatchTheRegexp(latestTweet)) {
-                logger.info("Watered reaction triggered based on moisture level of {}", moisture);
+                logger.info("Watered reaction triggered based on moisture level of {}", readings.getMoisture());
 
                 return true;
             }

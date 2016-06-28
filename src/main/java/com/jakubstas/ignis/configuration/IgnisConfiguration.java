@@ -9,7 +9,14 @@ public class IgnisConfiguration {
     @Autowired
     private TwitterConfiguration twitterConfiguration;
 
+    @Autowired
+    private SensorsConfiguration sensorsConfiguration;
+
     public TwitterConfiguration getTwitterConfiguration() {
         return twitterConfiguration;
+    }
+
+    public SensorsConfiguration getSensorsConfiguration() {
+        return sensorsConfiguration;
     }
 }
