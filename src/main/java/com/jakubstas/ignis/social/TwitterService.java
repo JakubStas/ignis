@@ -22,6 +22,7 @@ public class TwitterService {
     }
 
     public Tweet getLatestTweet() {
+        // TODO: refactor this crap
         return twitter.timelineOperations().getHomeTimeline(1).get(0);
     }
 
