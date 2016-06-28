@@ -1,7 +1,7 @@
-package com.jakubstas.ignis.resource;
+package com.jakubstas.ignis.readings.resource;
 
-import com.jakubstas.ignis.model.Readings;
-import com.jakubstas.ignis.service.ReadingsService;
+import com.jakubstas.ignis.reactions.ReactionsProcessingChain;
+import com.jakubstas.ignis.readings.model.Readings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReadingsController {
 
     @Autowired
-    private ReadingsService readingsService;
+    private ReactionsProcessingChain reactionsProcessingChain;
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void processReadings(@RequestBody Readings readings) {
-        readingsService.processReadings(readings);
+        reactionsProcessingChain.run(readings);
     }
 }

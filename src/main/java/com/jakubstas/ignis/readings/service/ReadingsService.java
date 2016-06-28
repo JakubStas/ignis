@@ -1,6 +1,6 @@
-package com.jakubstas.ignis.service;
+package com.jakubstas.ignis.readings.service;
 
-import com.jakubstas.ignis.model.Readings;
+import com.jakubstas.ignis.readings.model.Readings;
 import com.jakubstas.ignis.social.TwitterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.jakubstas.ignis.model;
+package com.jakubstas.ignis.readings.model;
 
 public class Readings {
 
