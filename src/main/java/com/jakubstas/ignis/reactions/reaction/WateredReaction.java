@@ -14,13 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.jakubstas.ignis.reactions.reaction.ReactionResult.*;
-import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
+import static org.springframework.core.Ordered.LOWEST_PRECEDENCE;
 
-@Order(HIGHEST_PRECEDENCE)
+@Order(LOWEST_PRECEDENCE)
 @Component
-public class WateringReaction implements Reaction {
+public class WateredReaction implements Reaction {
 
-    private Logger logger = LoggerFactory.getLogger(WateringReaction.class);
+    private Logger logger = LoggerFactory.getLogger(WateredReaction.class);
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm dd-MM-yyyy");
 
@@ -30,24 +30,23 @@ public class WateringReaction implements Reaction {
     @Autowired
     private TwitterService twitterService;
 
-    private final String firstTweetTemplate = "Hey %s, we need some water! (%s)";
+    private final String tweetTemplate = "Yum! Enjoying some fresh water! (%s)";
 
     @Override
     public boolean shouldReact(final Readings readings) {
         final int moisture = readings.getMoisture();
 
-        if (moisture <= 750) {
+        if (moisture > 750) {
             final String latestTweet = twitterService.getLatestTweet().getText();
-            final String tweetPrefix = String.format("Hey %s, we need some water!", configuration.getTwitterConfiguration().getUserHandle());
 
-            if (!latestTweet.startsWith(tweetPrefix)) {
-                logger.info("Watering reaction triggered based on moisture level of {}", moisture);
+            if (!latestTweet.startsWith("Yum! Enjoying some fresh water!")) {
+                logger.info("Watered reaction triggered based on moisture level of {}", moisture);
 
                 return true;
             }
         }
 
-        logger.info("Watering reaction was not triggered!");
+        logger.info("Watered reaction was not triggered!");
 
         return false;
     }
@@ -55,31 +54,27 @@ public class WateringReaction implements Reaction {
     @Override
     public ReactionResult react(final Readings readings) {
         try {
-            tweetFirstWaterRequest();
+            tweetWateredReaction();
 
             return REACTED;
         } catch (DuplicateStatusException e) {
-            logger.warn("Watering reaction has already been posted!");
+            logger.warn("Watered reaction has already been posted!");
 
             return DID_NOTHING;
         } catch (Throwable t) {
-            logger.error("Watering reaction failed! {}", t.getMessage());
+            logger.error("Watered reaction failed! {}", t.getMessage());
 
             return FAILED;
         }
     }
 
-    private void tweetFirstWaterRequest() {
-        tweetWaterRequest(firstTweetTemplate);
-    }
-
-    private void tweetWaterRequest(final String tweetTemplate) {
-        final String userHandle = configuration.getTwitterConfiguration().getUserHandle();
+    private void tweetWateredReaction() {
         final String currentDate = simpleDateFormat.format(new Date());
 
-        final String tweet = String.format(tweetTemplate, userHandle, currentDate);
+        final String tweet = String.format(tweetTemplate, currentDate);
         twitterService.postTweet(tweet);
 
-        logger.info("Watering reaction successfully tweeted!");
+
+        logger.info("Watered reaction successfully tweeted!");
     }
 }
