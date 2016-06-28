@@ -21,6 +21,10 @@ public class TwitterService {
         twitter.timelineOperations().updateStatus(message);
     }
 
+    public Tweet getLatestTweet() {
+        return twitter.timelineOperations().getHomeTimeline(1).get(0);
+    }
+
     public List<Tweet> getTweets() {
         return twitter.timelineOperations().getHomeTimeline();
     }
