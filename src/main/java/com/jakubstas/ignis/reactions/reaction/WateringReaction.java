@@ -6,11 +6,14 @@ import com.jakubstas.ignis.social.TwitterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.social.DuplicateStatusException;
 import org.springframework.stereotype.Component;
 
 import static com.jakubstas.ignis.reactions.reaction.ReactionResult.*;
+import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
+@Order(HIGHEST_PRECEDENCE)
 @Component
 public class WateringReaction implements Reaction {
 
