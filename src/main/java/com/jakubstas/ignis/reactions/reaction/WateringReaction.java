@@ -1,7 +1,7 @@
 package com.jakubstas.ignis.reactions.reaction;
 
 import com.jakubstas.ignis.configuration.IgnisConfiguration;
-import com.jakubstas.ignis.personalities.PersonalityMessageSource;
+import com.jakubstas.ignis.personality.PersonalityMessageSource;
 import com.jakubstas.ignis.readings.model.Readings;
 import com.jakubstas.ignis.social.TwitterService;
 import org.slf4j.Logger;

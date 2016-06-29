@@ -1,4 +1,4 @@
-package com.jakubstas.ignis.personalities;
+package com.jakubstas.ignis.personality;
 
 import java.util.Locale;
 
