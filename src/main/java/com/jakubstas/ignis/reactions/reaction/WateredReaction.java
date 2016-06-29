@@ -2,6 +2,7 @@ package com.jakubstas.ignis.reactions.reaction;
 
 import com.jakubstas.ignis.configuration.IgnisConfiguration;
 import com.jakubstas.ignis.personality.PersonalityMessageSource;
+import com.jakubstas.ignis.reactions.ReactionPriorities;
 import com.jakubstas.ignis.readings.model.Readings;
 import com.jakubstas.ignis.social.TwitterService;
 import org.slf4j.Logger;
@@ -11,10 +12,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED;
-import static org.springframework.core.Ordered.LOWEST_PRECEDENCE;
 
 @Component
-@Order(LOWEST_PRECEDENCE)
+@Order(ReactionPriorities.WATERED)
 public class WateredReaction extends Reaction {
 
     private final Logger logger = LoggerFactory.getLogger(WateredReaction.class);
@@ -23,11 +23,22 @@ public class WateredReaction extends Reaction {
     private PersonalityMessageSource personalityMessageSource;
 
     @Autowired
+    private WateringReaction wateringReaction;
+
+    @Autowired
     private IgnisConfiguration configuration;
 
     @Autowired
     private TwitterService twitterService;
 
+    /**
+     * Decides whether to thank for water or not. If all of the following conditions are met, the reaction is triggered and this method returns <code>true</code>:
+     * <ul>
+     * <li>the current moisture reading is greater than the watering threshold</li>
+     * <li>the latest tweet was asking for water</li>
+     * </ul>
+     * Otherwise this method returns <code>false</code>.
+     */
     @Override
     public boolean shouldReact(final Readings readings) {
         final int wateringThreshold = configuration.getSensorsConfiguration().getMoisture().getWateringThreshold();
@@ -35,7 +46,7 @@ public class WateredReaction extends Reaction {
         if (readings.getMoisture() > wateringThreshold) {
             final String latestTweet = twitterService.getLatestTweet().getText();
 
-            if (!doesMessageMatchTheRegexp(latestTweet)) {
+            if (wateringReaction.doesMessageMatchTheRegexp(latestTweet)) {
                 logger.info("Watered reaction triggered based on moisture level of {}", readings.getMoisture());
 
                 return true;
