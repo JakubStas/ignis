@@ -1,10 +1,10 @@
-package com.jakubstas.ignis.personalities;
+package com.jakubstas.ignis.personality;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
-import static com.jakubstas.ignis.personalities.Personality.DEFAULT;
+import static com.jakubstas.ignis.personality.Personality.DEFAULT;
 
 @Component
 public class PersonalityMessageSource {
