@@ -15,19 +15,16 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED;
+import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED_WITH_BREAK;
 
 @Component
-@Order(ReactionPriorities.WATERING)
-public class WateringReaction extends Reaction {
+@Order(ReactionPriorities.FERTILIZING)
+public class FertilizingReaction extends Reaction {
 
     private Logger logger = LoggerFactory.getLogger(WateringReaction.class);
 
     @Autowired
     private PersonalityMessageSource personalityMessageSource;
-
-    @Autowired
-    private FertilizingReaction fertilizingReaction;
 
     @Autowired
     private IgnisConfiguration configuration;
@@ -38,11 +35,11 @@ public class WateringReaction extends Reaction {
     private final ZoneId zoneId = ZoneId.of("Europe/Dublin");
 
     /**
-     * Decides whether to ask for water or not. If all of the following conditions are met, the reaction is triggered and this method returns <code>true</code>:
+     * Decides whether to ask for fertilizers or not. If all of the following conditions are met, the reaction is triggered and this method returns <code>true</code>:
      * <ul>
      * <li>the current moisture reading is less or equal to the watering threshold</li>
-     * <li>it is not Wednesday</li>
-     * <li>the latest tweet was not asking for water or fertilizer</li>
+     * <li>it is Wednesday</li>
+     * <li>the latest tweet was not asking for fertilizer</li>
      * </ul>
      * Otherwise this method returns <code>false</code>.
      */
@@ -50,17 +47,17 @@ public class WateringReaction extends Reaction {
     public boolean shouldReact(final Readings readings) {
         final int wateringThreshold = configuration.getSensorsConfiguration().getMoisture().getWateringThreshold();
 
-        if (readings.getMoisture() <= wateringThreshold && !isItWednesday()) {
+        if (readings.getMoisture() <= wateringThreshold && isItWednesday()) {
             final String latestTweet = twitterService.getLatestTweet().getText();
 
-            if (!doesMessageMatchTheRegexp(latestTweet) && !fertilizingReaction.doesMessageMatchTheRegexp(latestTweet)) {
-                logger.info("Watering reaction triggered based on moisture level of {}", readings.getMoisture());
+            if (!doesMessageMatchTheRegexp(latestTweet)) {
+                logger.info("Fertilizing reaction triggered based on moisture level of {} and the day being Wednesday", readings.getMoisture());
 
                 return true;
             }
         }
 
-        logger.info("Watering reaction was not triggered!");
+        logger.info("Fertilizing reaction was not triggered!");
 
         return false;
     }
@@ -72,14 +69,13 @@ public class WateringReaction extends Reaction {
     @Override
     protected ReactionResult reactInternal(Readings readings) {
         final String userHandle = configuration.getTwitterConfiguration().getUserHandle();
-
         final String message = personalityMessageSource.getMessage(getReactionTemplateKey(), userHandle, getTimestamp());
 
         twitterService.postTweet(message);
 
-        logger.info("Watering reaction successfully tweeted!");
+        logger.info("Fertilizing reaction successfully tweeted!");
 
-        return REACTED;
+        return REACTED_WITH_BREAK;
     }
 
     @Override
@@ -89,6 +85,6 @@ public class WateringReaction extends Reaction {
 
     @Override
     protected String getReactionMessageKey() {
-        return "reaction.watering";
+        return "reaction.fertilizing";
     }
 }
