@@ -1,14 +1,16 @@
 package com.jakubstas.ignis.configuration;
 
+import com.jakubstas.ignis.configuration.sensors.Moisture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.api.impl.TwitterTemplate;
 
 @Configuration
-@EnableConfigurationProperties({TwitterConfiguration.class})
+@EnableConfigurationProperties({TwitterConfiguration.class, SensorsConfiguration.class, Moisture.class})
 public class AppConfiguration {
 
     @Autowired
@@ -17,5 +19,14 @@ public class AppConfiguration {
     @Bean
     public Twitter twitter() {
         return new TwitterTemplate(twitterConfiguration.getAppId(), twitterConfiguration.getAppSecret(), twitterConfiguration.getAccessToken(), twitterConfiguration.getAccessTokenSecret());
+    }
+
+    @Bean
+    public ResourceBundleMessageSource messageSource() {
+        final ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+        source.setBasename("personalities/personality");
+        source.setUseCodeAsDefaultMessage(true);
+
+        return source;
     }
 }

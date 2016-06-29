@@ -1,28 +1,26 @@
 package com.jakubstas.ignis.reactions.reaction;
 
 import com.jakubstas.ignis.configuration.IgnisConfiguration;
+import com.jakubstas.ignis.personalities.PersonalityMessageSource;
 import com.jakubstas.ignis.readings.model.Readings;
 import com.jakubstas.ignis.social.TwitterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
-import org.springframework.social.DuplicateStatusException;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import static com.jakubstas.ignis.reactions.reaction.ReactionResult.*;
+import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED;
 import static org.springframework.core.Ordered.LOWEST_PRECEDENCE;
 
-@Order(LOWEST_PRECEDENCE)
 @Component
-public class WateredReaction implements Reaction {
+@Order(LOWEST_PRECEDENCE)
+public class WateredReaction extends Reaction {
 
-    private Logger logger = LoggerFactory.getLogger(WateredReaction.class);
+    private final Logger logger = LoggerFactory.getLogger(WateredReaction.class);
 
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+    @Autowired
+    private PersonalityMessageSource personalityMessageSource;
 
     @Autowired
     private IgnisConfiguration configuration;
@@ -30,17 +28,15 @@ public class WateredReaction implements Reaction {
     @Autowired
     private TwitterService twitterService;
 
-    private final String tweetTemplate = "Yum! Enjoying some fresh water! (%s)";
-
     @Override
     public boolean shouldReact(final Readings readings) {
-        final int moisture = readings.getMoisture();
+        final int wateringThreshold = configuration.getSensorsConfiguration().getMoisture().getWateringThreshold();
 
-        if (moisture > 750) {
+        if (readings.getMoisture() > wateringThreshold) {
             final String latestTweet = twitterService.getLatestTweet().getText();
 
-            if (!latestTweet.startsWith("Yum! Enjoying some fresh water!")) {
-                logger.info("Watered reaction triggered based on moisture level of {}", moisture);
+            if (!doesMessageMatchTheRegexp(latestTweet)) {
+                logger.info("Watered reaction triggered based on moisture level of {}", readings.getMoisture());
 
                 return true;
             }
@@ -52,29 +48,23 @@ public class WateredReaction implements Reaction {
     }
 
     @Override
-    public ReactionResult react(final Readings readings) {
-        try {
-            tweetWateredReaction();
+    protected ReactionResult reactInternal(Readings readings) {
+        final String message = personalityMessageSource.getMessage(getReactionTemplateKey(), getTimestamp());
 
-            return REACTED;
-        } catch (DuplicateStatusException e) {
-            logger.warn("Watered reaction has already been posted!");
-
-            return DID_NOTHING;
-        } catch (Throwable t) {
-            logger.error("Watered reaction failed! {}", t.getMessage());
-
-            return FAILED;
-        }
-    }
-
-    private void tweetWateredReaction() {
-        final String currentDate = simpleDateFormat.format(new Date());
-
-        final String tweet = String.format(tweetTemplate, currentDate);
-        twitterService.postTweet(tweet);
-
+        twitterService.postTweet(message);
 
         logger.info("Watered reaction successfully tweeted!");
+
+        return REACTED;
+    }
+
+    @Override
+    protected String getReactionRegexp() {
+        return personalityMessageSource.getMessage(getReactionRegexpKey());
+    }
+
+    @Override
+    protected String getReactionMessageKey() {
+        return "reaction.watered";
     }
 }
