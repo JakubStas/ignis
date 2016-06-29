@@ -21,7 +21,7 @@ import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED_WITH
 @Order(ReactionPriorities.FERTILIZING)
 public class FertilizingReaction extends Reaction {
 
-    private Logger logger = LoggerFactory.getLogger(WateringReaction.class);
+    private Logger logger = LoggerFactory.getLogger(FertilizingReaction.class);
 
     @Autowired
     private PersonalityMessageSource personalityMessageSource;
