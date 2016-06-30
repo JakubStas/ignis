@@ -16,10 +16,10 @@ import org.springframework.util.StringUtils;
 import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED;
 
 @Component
-@Order(ReactionPriorities.FERTILIZED)
-public class FertilizedReaction extends Reaction {
+@Order(ReactionPriorities.SUNNY_DAY)
+public class SunnyDayReaction extends Reaction {
 
-    private final Logger logger = LoggerFactory.getLogger(FertilizedReaction.class);
+    private Logger logger = LoggerFactory.getLogger(SunnyDayReaction.class);
 
     @Autowired
     private PersonalityMessageSource personalityMessageSource;
@@ -30,36 +30,33 @@ public class FertilizedReaction extends Reaction {
     @Autowired
     private TwitterService twitterService;
 
-    @Autowired
-    private FertilizingReaction fertilizingReaction;
-
     /**
-     * Decides whether to thank for fertilizers or not. If all of the following conditions are met, the reaction is triggered and this method returns <code>true</code>:
+     * Decides whether to celebrate sunny day or not. If all of the following conditions are met, the reaction is triggered and this method returns <code>true</code>:
      * <ul>
-     * <li>the current moisture reading is greater than the watering threshold</li>
-     * <li>the latest tweet was asking for fertilizer</li>
+     * <li>the current light reading is less or equal to the sunny threshold</li>
+     * <li>the latest tweet was not about sunny weather</li>
      * </ul>
      * Otherwise this method returns <code>false</code>.
      */
     @Override
     public boolean shouldReact(final Readings readings) {
-        final int wateringThreshold = configuration.getSensorsConfiguration().getMoisture().getWateringThreshold();
+        final int sunnyThreshold = configuration.getSensorsConfiguration().getLight().getSunnyThreshold();
 
-        if (readings.getMoisture() > wateringThreshold) {
+        if (readings.getLight() > sunnyThreshold) {
             final Tweet latestTweet = twitterService.getLatestTweet();
 
             if (!StringUtils.hasText(latestTweet.getText())) {
                 return true;
             }
 
-            if (fertilizingReaction.doesMessageMatchTheRegexp(latestTweet.getText())) {
-                logger.info("Fertilized reaction triggered based on moisture level of {}", readings.getMoisture());
+            if (!doesMessageMatchTheRegexp(latestTweet.getText())) {
+                logger.info("Sunny day reaction triggered based on light level of {}", readings.getLight());
 
                 return true;
             }
         }
 
-        logger.info("Fertilized reaction was not triggered!");
+        logger.info("Sunny day reaction was not triggered!");
 
         return false;
     }
@@ -70,7 +67,7 @@ public class FertilizedReaction extends Reaction {
 
         twitterService.postTweet(message);
 
-        logger.info("Fertilized reaction successfully tweeted!");
+        logger.info("Sunny day reaction successfully tweeted!");
 
         return REACTED;
     }
@@ -82,6 +79,6 @@ public class FertilizedReaction extends Reaction {
 
     @Override
     protected String getReactionMessageKey() {
-        return "reaction.fretilized";
+        return "reaction.sunnyDay";
     }
 }

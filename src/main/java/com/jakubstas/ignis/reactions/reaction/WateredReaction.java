@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.social.twitter.api.Tweet;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED;
 
@@ -44,9 +46,13 @@ public class WateredReaction extends Reaction {
         final int wateringThreshold = configuration.getSensorsConfiguration().getMoisture().getWateringThreshold();
 
         if (readings.getMoisture() > wateringThreshold) {
-            final String latestTweet = twitterService.getLatestTweet().getText();
+            final Tweet latestTweet = twitterService.getLatestTweet();
 
-            if (wateringReaction.doesMessageMatchTheRegexp(latestTweet)) {
+            if (!StringUtils.hasText(latestTweet.getText())) {
+                return true;
+            }
+
+            if (wateringReaction.doesMessageMatchTheRegexp(latestTweet.getText())) {
                 logger.info("Watered reaction triggered based on moisture level of {}", readings.getMoisture());
 
                 return true;

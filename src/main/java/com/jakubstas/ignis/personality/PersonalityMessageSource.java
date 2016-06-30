@@ -13,10 +13,10 @@ public class PersonalityMessageSource {
     private MessageSource messageSource;
 
     public String getMessage(final String key, final Object... args) {
-        return messageSource.getMessage(key, args, DEFAULT.getLocale());
+        return getMessage(key, DEFAULT, args);
     }
 
     public String getMessage(final String key, final Personality personality, final Object... args) {
-        return messageSource.getMessage(key, args, personality.getLocale());
+        return new String(messageSource.getMessage(key, args, personality.getLocale()));
     }
 }
