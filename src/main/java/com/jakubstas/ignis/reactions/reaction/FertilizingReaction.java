@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.social.twitter.api.Tweet;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -48,9 +50,13 @@ public class FertilizingReaction extends Reaction {
         final int wateringThreshold = configuration.getSensorsConfiguration().getMoisture().getWateringThreshold();
 
         if (readings.getMoisture() <= wateringThreshold && isItWednesday()) {
-            final String latestTweet = twitterService.getLatestTweet().getText();
+            final Tweet latestTweet = twitterService.getLatestTweet();
 
-            if (!doesMessageMatchTheRegexp(latestTweet)) {
+            if (!StringUtils.hasText(latestTweet.getText())) {
+                return true;
+            }
+
+            if (!doesMessageMatchTheRegexp(latestTweet.getText())) {
                 logger.info("Fertilizing reaction triggered based on moisture level of {} and the day being Wednesday", readings.getMoisture());
 
                 return true;

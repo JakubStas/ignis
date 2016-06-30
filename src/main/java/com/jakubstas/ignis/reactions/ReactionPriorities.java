@@ -9,4 +9,6 @@ public final class ReactionPriorities {
     public static final int FERTILIZED = 90;
 
     public static final int WATERED = 100;
+
+    public static final int SUNNY_DAY = 200;
 }
