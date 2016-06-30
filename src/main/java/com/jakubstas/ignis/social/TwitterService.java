@@ -21,8 +21,10 @@ public class TwitterService {
         twitter.timelineOperations().updateStatus(message);
     }
 
+    /**
+     * This method expects that the twitter account has at least one tweet published.
+     */
     public Tweet getLatestTweet() {
-        // TODO: refactor this crap
         return twitter.timelineOperations().getHomeTimeline(1).get(0);
     }
 
