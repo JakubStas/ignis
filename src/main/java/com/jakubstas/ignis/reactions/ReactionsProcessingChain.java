@@ -1,5 +1,7 @@
 package com.jakubstas.ignis.reactions;
 
+import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED_WITH_BREAK;
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,7 +12,6 @@ import org.springframework.stereotype.Component;
 import com.jakubstas.ignis.reactions.reaction.Reaction;
 import com.jakubstas.ignis.reactions.reaction.ReactionResult;
 import com.jakubstas.ignis.readings.model.Readings;
-import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED_WITH_BREAK;
 
 @Component
 public class ReactionsProcessingChain {

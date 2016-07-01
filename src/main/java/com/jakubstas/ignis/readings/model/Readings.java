@@ -43,9 +43,6 @@ public class Readings {
     }
 
     public String getAsTweet() {
-        return "moisture=" + moisture +
-                "|temperature=" + temperature +
-                "|humidity=" + humidity +
-                "|light=" + light;
+        return "moisture=" + moisture + "|temperature=" + temperature + "|humidity=" + humidity + "|light=" + light;
     }
 }

@@ -1,5 +1,7 @@
 package com.jakubstas.ignis.reactions.reaction;
 
+import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import com.jakubstas.ignis.personality.PersonalityMessageSource;
 import com.jakubstas.ignis.reactions.ReactionPriorities;
 import com.jakubstas.ignis.readings.model.Readings;
 import com.jakubstas.ignis.social.TwitterService;
-import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED;
 
 @Component
 @Order(ReactionPriorities.SUNNY_DAY)
@@ -31,7 +32,8 @@ public class SunnyDayReaction extends Reaction {
     private TwitterService twitterService;
 
     /**
-     * Decides whether to celebrate sunny day or not. If all of the following conditions are met, the reaction is triggered and this method returns <code>true</code>:
+     * Decides whether to celebrate sunny day or not. If all of the following conditions are met, the reaction is triggered and this method returns
+     * <code>true</code>:
      * <ul>
      * <li>the current light reading is less or equal to the sunny threshold</li>
      * <li>the latest tweet was not about sunny weather</li>

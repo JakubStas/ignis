@@ -1,5 +1,7 @@
 package com.jakubstas.ignis.reactions.reaction;
 
+import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED_WITH_BREAK;
+
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -17,7 +19,6 @@ import com.jakubstas.ignis.personality.PersonalityMessageSource;
 import com.jakubstas.ignis.reactions.ReactionPriorities;
 import com.jakubstas.ignis.readings.model.Readings;
 import com.jakubstas.ignis.social.TwitterService;
-import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED_WITH_BREAK;
 
 @Component
 @Order(ReactionPriorities.FERTILIZING)
@@ -37,7 +38,8 @@ public class FertilizingReaction extends Reaction {
     private TwitterService twitterService;
 
     /**
-     * Decides whether to ask for fertilizers or not. If all of the following conditions are met, the reaction is triggered and this method returns <code>true</code>:
+     * Decides whether to ask for fertilizers or not. If all of the following conditions are met, the reaction is triggered and this method returns
+     * <code>true</code>:
      * <ul>
      * <li>the current moisture reading is less or equal to the watering threshold</li>
      * <li>it is Wednesday</li>

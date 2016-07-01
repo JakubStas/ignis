@@ -12,6 +12,5 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class IgnisApplicationTests {
 
     @Test
-    public void contextLoads() {
-    }
+    public void contextLoads() {}
 }

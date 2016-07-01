@@ -1,5 +1,8 @@
 package com.jakubstas.ignis.reactions.reaction;
 
+import static com.jakubstas.ignis.reactions.reaction.ReactionResult.DID_NOTHING;
+import static com.jakubstas.ignis.reactions.reaction.ReactionResult.FAILED;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -12,8 +15,6 @@ import org.springframework.social.DuplicateStatusException;
 
 import com.google.common.base.Joiner;
 import com.jakubstas.ignis.readings.model.Readings;
-import static com.jakubstas.ignis.reactions.reaction.ReactionResult.DID_NOTHING;
-import static com.jakubstas.ignis.reactions.reaction.ReactionResult.FAILED;
 
 public abstract class Reaction {
 
