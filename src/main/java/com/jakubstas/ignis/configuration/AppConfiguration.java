@@ -1,7 +1,5 @@
 package com.jakubstas.ignis.configuration;
 
-import com.jakubstas.ignis.configuration.sensors.Light;
-import com.jakubstas.ignis.configuration.sensors.Moisture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.api.impl.TwitterTemplate;
+
+import com.jakubstas.ignis.configuration.sensors.Light;
+import com.jakubstas.ignis.configuration.sensors.Moisture;
 
 @Configuration
 @EnableConfigurationProperties({TwitterConfiguration.class, SensorsConfiguration.class, Moisture.class, Light.class})

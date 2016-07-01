@@ -1,17 +1,17 @@
 package com.jakubstas.ignis.reactions.reaction;
 
-import com.google.common.base.Joiner;
-import com.jakubstas.ignis.readings.model.Readings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.social.DuplicateStatusException;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.social.DuplicateStatusException;
+
+import com.google.common.base.Joiner;
+import com.jakubstas.ignis.readings.model.Readings;
 import static com.jakubstas.ignis.reactions.reaction.ReactionResult.DID_NOTHING;
 import static com.jakubstas.ignis.reactions.reaction.ReactionResult.FAILED;
 

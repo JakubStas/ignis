@@ -1,10 +1,5 @@
 package com.jakubstas.ignis.reactions.reaction;
 
-import com.jakubstas.ignis.configuration.IgnisConfiguration;
-import com.jakubstas.ignis.personality.PersonalityMessageSource;
-import com.jakubstas.ignis.reactions.ReactionPriorities;
-import com.jakubstas.ignis.readings.model.Readings;
-import com.jakubstas.ignis.social.TwitterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +8,11 @@ import org.springframework.social.twitter.api.Tweet;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.jakubstas.ignis.configuration.IgnisConfiguration;
+import com.jakubstas.ignis.personality.PersonalityMessageSource;
+import com.jakubstas.ignis.reactions.ReactionPriorities;
+import com.jakubstas.ignis.readings.model.Readings;
+import com.jakubstas.ignis.social.TwitterService;
 import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED;
 
 @Component

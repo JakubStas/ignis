@@ -1,11 +1,11 @@
 package com.jakubstas.ignis.social;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class TwitterService {
