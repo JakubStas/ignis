@@ -23,6 +23,8 @@ import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED_WITH
 @Order(ReactionPriorities.FERTILIZING)
 public class FertilizingReaction extends Reaction {
 
+    private final ZoneId zoneId = ZoneId.of("Europe/Dublin");
+
     private Logger logger = LoggerFactory.getLogger(FertilizingReaction.class);
 
     @Autowired
@@ -33,8 +35,6 @@ public class FertilizingReaction extends Reaction {
 
     @Autowired
     private TwitterService twitterService;
-
-    private final ZoneId zoneId = ZoneId.of("Europe/Dublin");
 
     /**
      * Decides whether to ask for fertilizers or not. If all of the following conditions are met, the reaction is triggered and this method returns <code>true</code>:

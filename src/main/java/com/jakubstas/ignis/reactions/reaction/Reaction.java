@@ -17,8 +17,6 @@ import static com.jakubstas.ignis.reactions.reaction.ReactionResult.FAILED;
 
 public abstract class Reaction {
 
-    private Logger logger = LoggerFactory.getLogger(Reaction.class);
-
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
 
     private final ZoneId zoneId = ZoneId.of("Europe/Dublin");
@@ -26,6 +24,8 @@ public abstract class Reaction {
     private final String templateKeySuffix = "template";
 
     private final String regexpKeySuffix = "regexp";
+
+    private Logger logger = LoggerFactory.getLogger(Reaction.class);
 
     public abstract boolean shouldReact(final Readings readings);
 

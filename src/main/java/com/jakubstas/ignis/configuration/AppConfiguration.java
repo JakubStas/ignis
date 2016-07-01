@@ -19,7 +19,8 @@ public class AppConfiguration {
 
     @Bean
     public Twitter twitter() {
-        return new TwitterTemplate(twitterConfiguration.getAppId(), twitterConfiguration.getAppSecret(), twitterConfiguration.getAccessToken(), twitterConfiguration.getAccessTokenSecret());
+        return new TwitterTemplate(twitterConfiguration.getAppId(), twitterConfiguration.getAppSecret(), twitterConfiguration.getAccessToken(),
+                twitterConfiguration.getAccessTokenSecret());
     }
 
     @Bean

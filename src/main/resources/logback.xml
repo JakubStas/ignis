@@ -24,6 +24,12 @@
         <appender-ref ref="consoleAppender"/>
     </logger>
 
+    <logger name="org.springframework.web.servlet.DispatcherServlet" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="dailyRollingFileAppender"/>
+        <appender-ref ref="consoleAppender"/>
+    </logger>
+
     <root>
         <level value="INFO"/>
         <appender-ref ref="consoleAppender"/>
