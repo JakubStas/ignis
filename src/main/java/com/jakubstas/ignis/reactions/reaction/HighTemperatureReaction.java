@@ -18,7 +18,7 @@ import com.jakubstas.ignis.social.TwitterService;
 
 @Component
 @Order(ReactionPriorities.HOT_DAY)
-public class HighTemperatureReaction  extends Reaction {
+public class HighTemperatureReaction extends Reaction {
 
     private Logger logger = LoggerFactory.getLogger(HighTemperatureReaction.class);
 
