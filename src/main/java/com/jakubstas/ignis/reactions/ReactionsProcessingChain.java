@@ -7,11 +7,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.twitter.api.Tweet;
 import org.springframework.stereotype.Component;
 
 import com.jakubstas.ignis.reactions.reaction.Reaction;
 import com.jakubstas.ignis.reactions.reaction.ReactionResult;
 import com.jakubstas.ignis.readings.model.Readings;
+import com.jakubstas.ignis.social.TwitterService;
 
 @Component
 public class ReactionsProcessingChain {
@@ -21,9 +23,14 @@ public class ReactionsProcessingChain {
     @Autowired
     private List<Reaction> reactions;
 
+    @Autowired
+    private TwitterService twitterService;
+
     public void run(final Readings readings) {
+        final Tweet latestTweet = twitterService.getLatestTweet();
+
         for (Reaction reaction : reactions) {
-            if (reaction.shouldReact(readings)) {
+            if (reaction.shouldReact(readings, latestTweet)) {
                 final ReactionResult reactionResult = reaction.react(readings);
 
                 if (reactionResult == REACTED_WITH_BREAK) {

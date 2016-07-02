@@ -41,12 +41,10 @@ public class SunnyDayReaction extends Reaction {
      * Otherwise this method returns <code>false</code>.
      */
     @Override
-    public boolean shouldReact(final Readings readings) {
+    public boolean shouldReact(final Readings readings, final Tweet latestTweet) {
         final int sunnyThreshold = configuration.getSensorsConfiguration().getLight().getSunnyThreshold();
 
         if (readings.getLight() > sunnyThreshold) {
-            final Tweet latestTweet = twitterService.getLatestTweet();
-
             if (!StringUtils.hasText(latestTweet.getText())) {
                 return true;
             }

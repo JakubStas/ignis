@@ -10,9 +10,10 @@ import org.springframework.social.twitter.api.impl.TwitterTemplate;
 
 import com.jakubstas.ignis.configuration.sensors.Light;
 import com.jakubstas.ignis.configuration.sensors.Moisture;
+import com.jakubstas.ignis.configuration.sensors.Temperature;
 
 @Configuration
-@EnableConfigurationProperties({TwitterConfiguration.class, SensorsConfiguration.class, Moisture.class, Light.class})
+@EnableConfigurationProperties({TwitterConfiguration.class, SensorsConfiguration.class, Moisture.class, Light.class, Temperature.class})
 public class AppConfiguration {
 
     @Autowired

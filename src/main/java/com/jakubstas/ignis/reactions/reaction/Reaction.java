@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.social.DuplicateStatusException;
+import org.springframework.social.twitter.api.Tweet;
 
 import com.google.common.base.Joiner;
 import com.jakubstas.ignis.readings.model.Readings;
@@ -28,7 +29,7 @@ public abstract class Reaction {
 
     private Logger logger = LoggerFactory.getLogger(Reaction.class);
 
-    public abstract boolean shouldReact(final Readings readings);
+    public abstract boolean shouldReact(final Readings readings, final Tweet latestTweet);
 
     protected abstract ReactionResult reactInternal(final Readings readings);
 
