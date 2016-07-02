@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.jakubstas.ignis.configuration.sensors.Light;
 import com.jakubstas.ignis.configuration.sensors.Moisture;
+import com.jakubstas.ignis.configuration.sensors.Temperature;
 
 @Component
 @ConfigurationProperties(prefix = "sensor")
@@ -17,11 +18,18 @@ public class SensorsConfiguration {
     @Autowired
     private Light light;
 
+    @Autowired
+    private Temperature temperature;
+
     public Moisture getMoisture() {
         return moisture;
     }
 
     public Light getLight() {
         return light;
+    }
+
+    public Temperature getTemperature() {
+        return temperature;
     }
 }

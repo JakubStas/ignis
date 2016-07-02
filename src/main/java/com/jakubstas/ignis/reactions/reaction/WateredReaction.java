@@ -44,12 +44,10 @@ public class WateredReaction extends Reaction {
      * Otherwise this method returns <code>false</code>.
      */
     @Override
-    public boolean shouldReact(final Readings readings) {
+    public boolean shouldReact(final Readings readings, final Tweet latestTweet) {
         final int wateringThreshold = configuration.getSensorsConfiguration().getMoisture().getWateringThreshold();
 
         if (readings.getMoisture() > wateringThreshold) {
-            final Tweet latestTweet = twitterService.getLatestTweet();
-
             if (!StringUtils.hasText(latestTweet.getText())) {
                 return true;
             }

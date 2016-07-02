@@ -1,10 +1,6 @@
 package com.jakubstas.ignis.reactions.reaction;
 
-import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED_WITH_BREAK;
-
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +17,10 @@ import com.jakubstas.ignis.readings.model.Readings;
 import com.jakubstas.ignis.social.TwitterService;
 
 @Component
-@Order(ReactionPriorities.FERTILIZING)
-public class FertilizingReaction extends Reaction {
+@Order(ReactionPriorities.HOT_DAY)
+public class HighTemperatureReaction  extends Reaction {
 
-    private final ZoneId zoneId = ZoneId.of("Europe/Dublin");
-
-    private Logger logger = LoggerFactory.getLogger(FertilizingReaction.class);
+    private Logger logger = LoggerFactory.getLogger(HighTemperatureReaction.class);
 
     @Autowired
     private PersonalityMessageSource personalityMessageSource;
@@ -38,50 +32,46 @@ public class FertilizingReaction extends Reaction {
     private TwitterService twitterService;
 
     /**
-     * Decides whether to ask for fertilizers or not. If all of the following conditions are met, the reaction is triggered and this method returns
+     * Decides whether to celebrate hot day or not. If all of the following conditions are met, the reaction is triggered and this method returns
      * <code>true</code>:
      * <ul>
-     * <li>the current moisture reading is less or equal to the watering threshold</li>
-     * <li>it is Wednesday</li>
-     * <li>the latest tweet was not asking for fertilizer</li>
+     * <li>the current temperature reading is greater than temperature median + tolerance threshold</li>
+     * <li>the latest tweet was not about hot weather</li>
      * </ul>
      * Otherwise this method returns <code>false</code>.
      */
     @Override
     public boolean shouldReact(final Readings readings, final Tweet latestTweet) {
-        final int wateringThreshold = configuration.getSensorsConfiguration().getMoisture().getWateringThreshold();
+        final int temperatureMedian = configuration.getSensorsConfiguration().getTemperature().getMedian();
+        final int temperatureTolerance = configuration.getSensorsConfiguration().getTemperature().getTolerance();
+        final int hotTemperatureThreshold = temperatureMedian + temperatureTolerance;
 
-        if (readings.getMoisture() <= wateringThreshold && isItWednesday()) {
+        if (readings.getTemperature() > hotTemperatureThreshold) {
             if (!StringUtils.hasText(latestTweet.getText())) {
                 return true;
             }
 
             if (!doesMessageMatchTheRegexp(latestTweet.getText())) {
-                logger.info("Fertilizing reaction triggered based on moisture level of {} and the day being Wednesday", readings.getMoisture());
+                logger.info("Hot day reaction triggered based on temperature level of {}", readings.getTemperature());
 
                 return true;
             }
         }
 
-        logger.info("Fertilizing reaction was not triggered!");
+        logger.info("Hot day reaction was not triggered!");
 
         return false;
     }
 
-    private boolean isItWednesday() {
-        return LocalDateTime.now(zoneId).getDayOfWeek() == DayOfWeek.WEDNESDAY;
-    }
-
     @Override
     protected ReactionResult reactInternal(Readings readings) {
-        final String userHandle = configuration.getTwitterConfiguration().getUserHandle();
-        final String message = personalityMessageSource.getMessage(getReactionTemplateKey(), userHandle, getTimestamp());
+        final String message = personalityMessageSource.getMessage(getReactionTemplateKey(), getTimestamp());
 
         twitterService.postTweet(message);
 
-        logger.info("Fertilizing reaction successfully tweeted!");
+        logger.info("Hot day reaction successfully tweeted!");
 
-        return REACTED_WITH_BREAK;
+        return REACTED;
     }
 
     @Override
@@ -91,6 +81,7 @@ public class FertilizingReaction extends Reaction {
 
     @Override
     protected String getReactionMessageKey() {
-        return "reaction.fertilizing";
+        return "reaction.temperatureHigh";
     }
 }
+
