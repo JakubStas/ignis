@@ -2,10 +2,6 @@ package com.jakubstas.ignis.reactions.reaction;
 
 import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +17,13 @@ import com.jakubstas.ignis.readings.model.Readings;
 import com.jakubstas.ignis.social.TwitterService;
 
 @Component
-@Order(ReactionPriorities.WATERING)
-public class WateringReaction extends Reaction {
+@Order(ReactionPriorities.COLD_DAY)
+public class LowTemperatureReaction extends Reaction {
 
-    private final ZoneId zoneId = ZoneId.of("Europe/Dublin");
-
-    private Logger logger = LoggerFactory.getLogger(WateringReaction.class);
+    private Logger logger = LoggerFactory.getLogger(LowTemperatureReaction.class);
 
     @Autowired
     private PersonalityMessageSource personalityMessageSource;
-
-    @Autowired
-    private FertilizingReaction fertilizingReaction;
 
     @Autowired
     private IgnisConfiguration configuration;
@@ -41,38 +32,35 @@ public class WateringReaction extends Reaction {
     private TwitterService twitterService;
 
     /**
-     * Decides whether to ask for water or not. If all of the following conditions are met, the reaction is triggered and this method returns
+     * Decides whether to compliant about cold day or not. If all of the following conditions are met, the reaction is triggered and this method returns
      * <code>true</code>:
      * <ul>
-     * <li>the current moisture reading is less or equal to the watering threshold</li>
-     * <li>it is not Wednesday</li>
-     * <li>the latest tweet was not asking for water or fertilizer</li>
+     * <li>the current temperature reading is less than temperature median - tolerance threshold</li>
+     * <li>the latest tweet was not about cold weather</li>
      * </ul>
      * Otherwise this method returns <code>false</code>.
      */
     @Override
     public boolean shouldReact(final Readings readings, final Tweet latestTweet) {
-        final int wateringThreshold = configuration.getSensorsConfiguration().getMoisture().getWateringThreshold();
+        final int temperatureMedian = configuration.getSensorsConfiguration().getTemperature().getMedian();
+        final int temperatureTolerance = configuration.getSensorsConfiguration().getTemperature().getTolerance();
+        final int coldTemperatureThreshold = temperatureMedian - temperatureTolerance;
 
-        if (readings.getMoisture() <= wateringThreshold && !isItWednesday()) {
+        if (readings.getTemperature() < coldTemperatureThreshold) {
             if (!StringUtils.hasText(latestTweet.getText())) {
                 return true;
             }
 
-            if (!doesMessageMatchTheRegexp(latestTweet.getText()) && !fertilizingReaction.doesMessageMatchTheRegexp(latestTweet.getText())) {
-                logger.info("Watering reaction triggered based on moisture level of {}", readings.getMoisture());
+            if (!doesMessageMatchTheRegexp(latestTweet.getText())) {
+                logger.info("Cold day reaction triggered based on temperature level of {}", readings.getTemperature());
 
                 return true;
             }
         }
 
-        logger.info("Watering reaction was not triggered!");
+        logger.info("Cold day reaction was not triggered!");
 
         return false;
-    }
-
-    private boolean isItWednesday() {
-        return LocalDateTime.now(zoneId).getDayOfWeek() == DayOfWeek.WEDNESDAY;
     }
 
     @Override
@@ -82,7 +70,7 @@ public class WateringReaction extends Reaction {
 
         twitterService.postTweet(message);
 
-        logger.info("Watering reaction successfully tweeted!");
+        logger.info("Cold day reaction successfully tweeted!");
 
         return REACTED;
     }
@@ -94,6 +82,8 @@ public class WateringReaction extends Reaction {
 
     @Override
     protected String getReactionMessageKey() {
-        return "reaction.watering";
+        return "reaction.temperatureLow";
     }
 }
+
+
