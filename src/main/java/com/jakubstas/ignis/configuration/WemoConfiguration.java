@@ -7,7 +7,7 @@ public class WemoConfiguration {
 
     private String ipAddress;
 
-    private int port;
+    private Integer port;
 
     public String getIpAddress() {
         return ipAddress;
@@ -21,7 +21,7 @@ public class WemoConfiguration {
         return port;
     }
 
-    public void setPort(int port) {
+    public void setPort(Integer port) {
         this.port = port;
     }
 }
