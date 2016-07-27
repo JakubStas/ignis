@@ -12,11 +12,18 @@ public class IgnisConfiguration {
     @Autowired
     private SensorsConfiguration sensorsConfiguration;
 
+    @Autowired
+    private WemoConfiguration wemoConfiguration;
+
     public TwitterConfiguration getTwitterConfiguration() {
         return twitterConfiguration;
     }
 
     public SensorsConfiguration getSensorsConfiguration() {
         return sensorsConfiguration;
+    }
+
+    public WemoConfiguration getWemoConfiguration() {
+        return wemoConfiguration;
     }
 }
