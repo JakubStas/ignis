@@ -30,14 +30,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetHomeIdResponse }
-     * 
-     */
-    public GetHomeIdResponse createGetHomeIdResponse() {
-        return new GetHomeIdResponse();
-    }
-
-    /**
      * Create an instance of {@link GetFriendlyName }
      * 
      */
@@ -46,11 +38,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetIconURLResponse }
+     * Create an instance of {@link GetLogFileURL }
      * 
      */
-    public GetIconURLResponse createGetIconURLResponse() {
-        return new GetIconURLResponse();
+    public GetLogFileURL createGetLogFileURL() {
+        return new GetLogFileURL();
     }
 
     /**
@@ -62,11 +54,75 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SetBinaryStateResponse }
+     * Create an instance of {@link GetIconURLResponse }
      * 
      */
-    public SetBinaryStateResponse createSetBinaryStateResponse() {
-        return new SetBinaryStateResponse();
+    public GetIconURLResponse createGetIconURLResponse() {
+        return new GetIconURLResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetBinaryState }
+     * 
+     */
+    public GetBinaryState createGetBinaryState() {
+        return new GetBinaryState();
+    }
+
+    /**
+     * Create an instance of {@link GetHomeIdResponse }
+     * 
+     */
+    public GetHomeIdResponse createGetHomeIdResponse() {
+        return new GetHomeIdResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetFriendlyNameResponse }
+     * 
+     */
+    public GetFriendlyNameResponse createGetFriendlyNameResponse() {
+        return new GetFriendlyNameResponse();
+    }
+
+    /**
+     * Create an instance of {@link ChangeFriendlyName }
+     * 
+     */
+    public ChangeFriendlyName createChangeFriendlyName() {
+        return new ChangeFriendlyName();
+    }
+
+    /**
+     * Create an instance of {@link GetIconURL }
+     * 
+     */
+    public GetIconURL createGetIconURL() {
+        return new GetIconURL();
+    }
+
+    /**
+     * Create an instance of {@link GetSignalStrength }
+     * 
+     */
+    public GetSignalStrength createGetSignalStrength() {
+        return new GetSignalStrength();
+    }
+
+    /**
+     * Create an instance of {@link SetBinaryState }
+     * 
+     */
+    public SetBinaryState createSetBinaryState() {
+        return new SetBinaryState();
+    }
+
+    /**
+     * Create an instance of {@link GetHomeId }
+     * 
+     */
+    public GetHomeId createGetHomeId() {
+        return new GetHomeId();
     }
 
     /**
@@ -86,59 +142,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ChangeFriendlyName }
+     * Create an instance of {@link SetBinaryStateResponse }
      * 
      */
-    public ChangeFriendlyName createChangeFriendlyName() {
-        return new ChangeFriendlyName();
-    }
-
-    /**
-     * Create an instance of {@link GetFriendlyNameResponse }
-     * 
-     */
-    public GetFriendlyNameResponse createGetFriendlyNameResponse() {
-        return new GetFriendlyNameResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetIconURL }
-     * 
-     */
-    public GetIconURL createGetIconURL() {
-        return new GetIconURL();
-    }
-
-    /**
-     * Create an instance of {@link GetBinaryState }
-     * 
-     */
-    public GetBinaryState createGetBinaryState() {
-        return new GetBinaryState();
-    }
-
-    /**
-     * Create an instance of {@link GetHomeId }
-     * 
-     */
-    public GetHomeId createGetHomeId() {
-        return new GetHomeId();
-    }
-
-    /**
-     * Create an instance of {@link GetLogFileURL }
-     * 
-     */
-    public GetLogFileURL createGetLogFileURL() {
-        return new GetLogFileURL();
-    }
-
-    /**
-     * Create an instance of {@link GetSignalStrength }
-     * 
-     */
-    public GetSignalStrength createGetSignalStrength() {
-        return new GetSignalStrength();
+    public SetBinaryStateResponse createSetBinaryStateResponse() {
+        return new SetBinaryStateResponse();
     }
 
     /**
@@ -147,14 +155,6 @@ public class ObjectFactory {
      */
     public GetLogFileURLResponse createGetLogFileURLResponse() {
         return new GetLogFileURLResponse();
-    }
-
-    /**
-     * Create an instance of {@link SetBinaryState }
-     * 
-     */
-    public SetBinaryState createSetBinaryState() {
-        return new SetBinaryState();
     }
 
 }
