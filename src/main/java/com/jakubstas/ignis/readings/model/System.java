@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 public class System {
 
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy ");
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss, EEE dd.MM.yyyy");
 
     private final ZoneId zoneId = ZoneId.of("Europe/Dublin");
 
