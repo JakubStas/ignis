@@ -44,4 +44,14 @@ public class PubNubConfiguration {
     public void setChannel(String channel) {
         this.channel = channel;
     }
+
+    @Override
+    public String toString() {
+        return "PubNubConfiguration{" +
+                "subscribeKey='" + subscribeKey + '\'' +
+                ", publishKey='" + publishKey + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", channel='" + channel + '\'' +
+                '}';
+    }
 }

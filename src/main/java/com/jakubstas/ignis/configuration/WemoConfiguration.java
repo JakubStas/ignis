@@ -24,4 +24,12 @@ public class WemoConfiguration {
     public void setPort(Integer port) {
         this.port = port;
     }
+
+    @Override
+    public String toString() {
+        return "WemoConfiguration{" +
+                "ipAddress='" + ipAddress + '\'' +
+                ", port=" + port +
+                '}';
+    }
 }

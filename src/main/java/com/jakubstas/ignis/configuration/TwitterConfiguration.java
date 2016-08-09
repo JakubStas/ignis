@@ -54,4 +54,15 @@ public class TwitterConfiguration {
     public void setUserHandle(String userHandle) {
         this.userHandle = userHandle;
     }
+
+    @Override
+    public String toString() {
+        return "TwitterConfiguration{" +
+                "appId='" + appId + '\'' +
+                ", appSecret='" + appSecret + '\'' +
+                ", accessToken='" + accessToken + '\'' +
+                ", accessTokenSecret='" + accessTokenSecret + '\'' +
+                ", userHandle='" + userHandle + '\'' +
+                '}';
+    }
 }
