@@ -84,6 +84,8 @@ public class WateringReaction extends Reaction {
 
         logger.info("Watering reaction successfully tweeted!");
 
+        readings.getReaction().reactedWithWatering();
+
         return REACTED;
     }
 

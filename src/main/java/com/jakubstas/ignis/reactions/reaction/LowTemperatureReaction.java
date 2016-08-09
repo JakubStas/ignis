@@ -72,6 +72,8 @@ public class LowTemperatureReaction extends Reaction {
 
         logger.info("Cold day reaction successfully tweeted!");
 
+        readings.getReaction().reactedWithLowTemperature();
+
         return REACTED;
     }
 

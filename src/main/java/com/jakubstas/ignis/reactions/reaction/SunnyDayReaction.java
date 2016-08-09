@@ -69,6 +69,8 @@ public class SunnyDayReaction extends Reaction {
 
         logger.info("Sunny day reaction successfully tweeted!");
 
+        readings.getReaction().reactedWithSunnyDay();
+
         return REACTED;
     }
 
