@@ -20,6 +20,7 @@
 
     <properties>
         <guava.version>19.0</guava.version>
+        <pubnub.version>4.0.6</pubnub.version>
 
         <jaxws-maven-plugin.version>1.12</jaxws-maven-plugin.version>
 
@@ -71,6 +72,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pubnub</groupId>
+            <artifactId>pubnub</artifactId>
+            <version>${pubnub.version}</version>
         </dependency>
     </dependencies>
 

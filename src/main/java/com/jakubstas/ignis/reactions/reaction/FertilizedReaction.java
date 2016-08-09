@@ -72,6 +72,8 @@ public class FertilizedReaction extends Reaction {
 
         logger.info("Fertilized reaction successfully tweeted!");
 
+        readings.getReaction().reactedWithFertilized();
+
         return REACTED;
     }
 

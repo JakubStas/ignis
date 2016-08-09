@@ -10,6 +10,15 @@ public class Readings {
 
     private int light;
 
+    private System system;
+
+    private Reaction reaction;
+
+    public Readings() {
+        this.system = new System();
+        this.reaction = new Reaction();
+    }
+
     public int getMoisture() {
         return moisture;
     }
@@ -40,6 +49,14 @@ public class Readings {
 
     public void setLight(int light) {
         this.light = light;
+    }
+
+    public System getSystem() {
+        return system;
+    }
+
+    public Reaction getReaction() {
+        return reaction;
     }
 
     public String getAsTweet() {
