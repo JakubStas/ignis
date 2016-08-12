@@ -45,4 +45,12 @@ public class Reaction {
     public String getReaction() {
         return reaction;
     }
+
+    @Override
+    public String toString() {
+        return "Reaction{" +
+                "reacted=" + reacted +
+                ", reaction='" + reaction + '\'' +
+                '}';
+    }
 }

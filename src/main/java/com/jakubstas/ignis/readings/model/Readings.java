@@ -62,4 +62,16 @@ public class Readings {
     public String getAsTweet() {
         return "moisture=" + moisture + "|temperature=" + temperature + "|humidity=" + humidity + "|light=" + light;
     }
+
+    @Override
+    public String toString() {
+        return "Readings{" +
+                "moisture=" + moisture +
+                ", temperature=" + temperature +
+                ", humidity=" + humidity +
+                ", light=" + light +
+                ", system=" + system +
+                ", reaction=" + reaction +
+                '}';
+    }
 }

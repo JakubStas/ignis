@@ -26,4 +26,12 @@ public class System {
     public String getTimestamp() {
         return timestamp;
     }
+
+    @Override
+    public String toString() {
+        return "System{" +
+                ", status='" + status + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                '}';
+    }
 }
