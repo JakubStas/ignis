@@ -28,7 +28,6 @@ public class ReadingsController {
         latestReadings = readings;
 
         reactionsProcessingChain.run(readings);
-
         pubNubClient.publishReadings(readings);
     }
 

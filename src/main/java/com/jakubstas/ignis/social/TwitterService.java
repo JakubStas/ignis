@@ -18,7 +18,7 @@ public class TwitterService {
     }
 
     public void postTweet(final String message) {
-        twitter.timelineOperations().updateStatus(message);
+//        twitter.timelineOperations().updateStatus(message);
     }
 
     /**
