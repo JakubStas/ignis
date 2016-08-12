@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.social.twitter.api.Twitter;
@@ -77,7 +76,7 @@ public class AppConfiguration {
 
         final PubNub pubNub = new PubNub(pnConfiguration);
 
-        pubNub.subscribe().channels(Arrays.asList(pubNubConfiguration.getChannel())).execute();
+        pubNub.subscribe().channels(Arrays.asList(pubNubConfiguration.getReadingsChannel(), pubNubConfiguration.getReactionChannel())).execute();
 
         return pubNub;
     }

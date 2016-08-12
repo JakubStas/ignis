@@ -1,5 +1,6 @@
 package com.jakubstas.ignis.reactions;
 
+import com.jakubstas.ignis.pubnub.PubNubClient;
 import com.jakubstas.ignis.reactions.reaction.Reaction;
 import com.jakubstas.ignis.reactions.reaction.ReactionResult;
 import com.jakubstas.ignis.readings.model.Readings;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.List;
 
+import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED;
 import static com.jakubstas.ignis.reactions.reaction.ReactionResult.REACTED_WITH_BREAK;
 
 @Component
@@ -28,6 +30,9 @@ public class ReactionsProcessingChain {
     @Autowired
     private TwitterService twitterService;
 
+    @Autowired
+    private PubNubClient pubNubClient;
+
     private Date latestTweetPulledTime;
 
     public void run(final Readings readings) {
@@ -39,6 +44,10 @@ public class ReactionsProcessingChain {
             for (Reaction reaction : reactions) {
                 if (reaction.shouldReact(readings, latestTweet)) {
                     final ReactionResult reactionResult = reaction.react(readings);
+
+                    if (reactionResult == REACTED || reactionResult == REACTED_WITH_BREAK) {
+                        pubNubClient.publishReaction(readings.getReaction());
+                    }
 
                     if (reactionResult == REACTED_WITH_BREAK) {
                         logger.info("Breaking the reaction chain!");

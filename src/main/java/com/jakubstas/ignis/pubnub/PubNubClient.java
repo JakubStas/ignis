@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.jakubstas.ignis.configuration.PubNubConfiguration;
+import com.jakubstas.ignis.readings.model.Reaction;
 import com.jakubstas.ignis.readings.model.Readings;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.PNCallback;
@@ -34,11 +35,15 @@ public class PubNubClient {
     }
 
     public void publishReadings(final Readings readings) {
-        publish(objectMapper.valueToTree(readings));
+        publish(pubNubConfiguration.getReadingsChannel(), objectMapper.valueToTree(readings));
     }
 
-    private void publish(final JsonNode jsonNode) {
-        pubNub.publish().message(jsonNode).channel(pubNubConfiguration.getChannel()).shouldStore(true).usePOST(true).async(new PNCallback<PNPublishResult>() {
+    public void publishReaction(final Reaction reaction) {
+        publish(pubNubConfiguration.getReactionChannel(), objectMapper.valueToTree(reaction));
+    }
+
+    private void publish(final String channel, final JsonNode jsonNode) {
+        pubNub.publish().message(jsonNode).channel(channel).shouldStore(true).usePOST(true).async(new PNCallback<PNPublishResult>() {
             @Override
             public void onResponse(PNPublishResult result, PNStatus status) {
                 if (status.isError()) {

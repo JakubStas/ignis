@@ -11,7 +11,9 @@ public class PubNubConfiguration {
 
     private String uuid;
 
-    private String channel;
+    private String readingsChannel;
+
+    private String reactionChannel;
 
     public String getSubscribeKey() {
         return subscribeKey;
@@ -37,12 +39,20 @@ public class PubNubConfiguration {
         this.uuid = uuid;
     }
 
-    public String getChannel() {
-        return channel;
+    public String getReadingsChannel() {
+        return readingsChannel;
     }
 
-    public void setChannel(String channel) {
-        this.channel = channel;
+    public void setReadingsChannel(String readingsChannel) {
+        this.readingsChannel = readingsChannel;
+    }
+
+    public String getReactionChannel() {
+        return reactionChannel;
+    }
+
+    public void setReactionChannel(String reactionChannel) {
+        this.reactionChannel = reactionChannel;
     }
 
     @Override
@@ -51,7 +61,8 @@ public class PubNubConfiguration {
                 "subscribeKey='" + subscribeKey + '\'' +
                 ", publishKey='" + publishKey + '\'' +
                 ", uuid='" + uuid + '\'' +
-                ", channel='" + channel + '\'' +
+                ", readingsChannel='" + readingsChannel + '\'' +
+                ", reactionChannel='" + reactionChannel + '\'' +
                 '}';
     }
 }

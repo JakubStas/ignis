@@ -1,12 +1,12 @@
 package com.jakubstas.ignis.reactions.reaction;
 
 public enum Reactions {
-    FERTILIZED("fertilized"),
-    FERTILIZING("fertilizing"),
-    LOW_TEMPERATURE("low_temperature"),
-    SUNNY_DAY("sunny_day"),
-    WATERED("watered"),
-    WATERING("watering");
+    FERTILIZED("Fertilized"),
+    FERTILIZING("Fertilizing"),
+    LOW_TEMPERATURE("Low Temperature"),
+    SUNNY_DAY("Sunny Day"),
+    WATERED("Watered"),
+    WATERING("Watering");
 
     private String name;
 
