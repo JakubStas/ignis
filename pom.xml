@@ -5,11 +5,11 @@
 
     <groupId>com.jakubstas</groupId>
     <artifactId>ignis</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>ignis</name>
-    <description>TBD</description>
+    <description>Chili peppers growing and monitoring application.</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
