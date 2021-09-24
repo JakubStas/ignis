@@ -1,10 +1,8 @@
-# Ignis
+# Project Ignis
 
 ## Twitter
 
-<a href="https://twitter.com/JakubsChillies">Follow @JakubsChillies</a>
-
-<a href="https://twitter.com/JakubsChillies">Tweets by JakubsChillies</a>
+<a href="https://twitter.com/JakubsPeppers">Tweets by Jakub's Chili Peppers</a>
 
 ## Realtime Dashboard
 
